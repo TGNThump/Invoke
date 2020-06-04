@@ -1,0 +1,12 @@
+service UsersService {
+    getUser(userId: Integer): User || UsersServiceErrorCode
+}
+
+type User {
+    name: String
+    age: Integer
+}
+
+enum UsersServiceErrorCode {
+    USER_NOT_FOUND
+}
