@@ -2,9 +2,7 @@ grammar Invoke;
 
 document: definition+;
 
-definition: typeDefinition;
-
-typeDefinition: serviceTypeDefinition | objectTypeDefinition | enumTypeDefinition;
+definition: serviceTypeDefinition | objectTypeDefinition | enumTypeDefinition;
 
 serviceTypeDefinition: 'service' name methodsDefinition?;
 
@@ -18,10 +16,11 @@ objectTypeDefinition : 'type' name fieldsDefinition?;
 fieldsDefinition: '{'  fieldDefinition+ '}';
 fieldDefinition: name ':' type_;
 
-type_: optionalType '!'? | unionType;
-optionalType: namedType | listType;
+type_: namedOrListType | requiredNamedOrListType | unionType;
+requiredNamedOrListType: namedOrListType '!';
+namedOrListType: namedType | listType;
 
-unionType: optionalType '||' optionalType;
+unionType: namedOrListType '||' namedOrListType;
 namedType: name;
 listType: '[' type_ ']';
 
